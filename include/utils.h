@@ -9,17 +9,19 @@
 #define TUT02_UTILS_H
 namespace swiftware::hpp {
   // create three randome arrays of size n and fill them with random float numbers
-  void generate_random_float_arrays(float* A, float* B, float* C, float *Correct, int n);
+  void generate_random_float_arrays(float* A, int n);
 
   // takes three arrays and allocate device arrays and copy data to device
   void allocate_and_copy_to_device(float* h_A, float* h_B, float* h_C,
                                    float** d_A, float** d_B, float** d_C, int n);
 
+  void dense_matmul(float* A, float* B, float* C, int m, int n, int k);
+
   void free_buffers(float* d_a, float* d_b, float* d_out);
 
   inline void cuda_check(cudaError_t e, const char* file, int line) {
     if (e != cudaSuccess) {
-      std::fprintf(stderr, "CUDA error %s:%d: %s\n", file, line, cudaGetErrorString(e));
+      //std::fprintf(stderr, "CUDA error %s:%d: %s\n", file, line, cudaGetErrorString(e));
       std::abort();
     }
   }

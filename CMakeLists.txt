@@ -1,7 +1,7 @@
 # See apt.kitware.com for updated CMake versions on Ubuntu.
 cmake_minimum_required(VERSION 3.20)
 
-project(tut02 CUDA CXX)
+project(tensor-core-demo CUDA CXX)
 
 # Use CPM to fetch NVBench's main branch.
 # CPM: https://github.com/cpm-cmake/CPM.cmake
@@ -39,10 +39,10 @@ FetchContent_MakeAvailable(googlebenchmark)
 
 include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/include)
-add_executable(tut02 main_bench.cu
+add_executable(tensor-core-demo main_bench.cu
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils.cpp
 )
-target_link_libraries(tut02
+target_link_libraries(tensor-core-demo
         nvbench::main)
 
 

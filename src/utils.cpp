@@ -5,22 +5,31 @@
 // Distribution of this code is not permitted in any form
 // without express written permission from SwiftWare Lab.
 
+#include <cuda_fp16.h>
 #include <cuda_runtime_api.h>
 #include <random>
 
 namespace swiftware::hpp {
   // create three randome arrays of size n and fill them with random float numbers
-  void generate_random_float_arrays(float* A, float* B, float* C, float *Correct, int n) {
+  void generate_random_float_arrays(half* A, int n) {
     std::default_random_engine generator;
     std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
     for (int i = 0; i < n; i++) {
       A[i] = distribution(generator);
-      B[i] = distribution(generator);
-      C[i] = distribution(generator);
     }
-    // compute the correct result
-    for (int i = 0; i < n; i++) {
-      Correct[i] = A[i] * B[i] + C[i];
+  }
+
+  void dense_matmul(half* A, half* B, float* C, int m, int n, int k)
+  {
+    for (int i = 0; i < m; i++)
+    {
+      for (int j = 0; j < n; j++)
+      {
+        for (int l = 0; l < k; l++)
+        {
+          C[i * n + j] += __half2float(A[i * k + l] * B[l * n + j]);
+        }
+      }
     }
   }
 
