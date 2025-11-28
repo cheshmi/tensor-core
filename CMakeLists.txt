@@ -15,6 +15,7 @@ if(NOT DEFINED CMAKE_CUDA_ARCHITECTURES OR CMAKE_CUDA_ARCHITECTURES STREQUAL "")
 endif()
 
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -mavx")
 include(FetchContent)
@@ -45,4 +46,4 @@ target_link_libraries(tensor-core-demo
         nvbench::main)
 
 
-add_subdirectory(test)
+#add_subdirectory(test)

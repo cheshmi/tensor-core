@@ -34,17 +34,36 @@ void generate_random_float_arrays(half* A, int n) {
 }
 
 
-void dense_matmul(half* A, half* B, float* C, int m, int n, int k)
+/*void dense_matmul(half* A, half* B, float* C, int m, int n, int k)
 {
   for (int i = 0; i < m; i++){
     for (int j = 0; j < n; j++){
       for (int l = 0; l < k; l++){
-        C[i * n + j] += __half2float(A[i * k + l] * B[l * n + j]);
+        //C[i * n + j] += __half2float(A[i * k + l] * B[l * n + j]);
+	auto tmp = A[i * k + l] * B[l * n + j];
+        float tmp_f = float(tmp);
+        C[i * n + j] += tmp_f;
       }
     }
   }
-}
+}*/
 
+
+void dense_matmul(half *A, half *B, float* C, int m, int n, int k)
+{
+  for (int i = 0; i < m; i++){
+    for (int j = 0; j < n; j++){
+      float prod = 0;
+      for (int l = 0; l < k; l++){
+        float f_A = A[i * k + l];
+        float f_B = B[l * n + j];
+        prod += f_A * f_B;
+//        C[i * n + j] += A[i * k + l] * B[l * n + j];
+      }
+      C[i * n + j] = prod;
+    }
+  }
+}
 
 void report_summary(nvbench::state& state)
 {

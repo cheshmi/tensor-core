@@ -10,7 +10,7 @@
 export SLURM_CONF=/etc/slurm/slurm.conf
 
 echo "----- Building tut03 -----"
-cmake -S . -B $(pwd)/build -DCMAKE_BUILD_TYPE=Release
+cmake -S . -B $(pwd)/build -DCMAKE_CUDA_ARCHITECTURES=89  -DCMAKE_BUILD_TYPE=Release
 cmake --build $(pwd)/build -- -j8
 make -j8
 
