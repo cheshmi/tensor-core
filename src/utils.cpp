@@ -10,28 +10,6 @@
 #include <random>
 
 namespace swiftware::hpp {
-  // create three randome arrays of size n and fill them with random float numbers
-  void generate_random_float_arrays(half* A, int n) {
-    std::default_random_engine generator;
-    std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
-    for (int i = 0; i < n; i++) {
-      A[i] = distribution(generator);
-    }
-  }
-
-  void dense_matmul(half* A, half* B, float* C, int m, int n, int k)
-  {
-    for (int i = 0; i < m; i++)
-    {
-      for (int j = 0; j < n; j++)
-      {
-        for (int l = 0; l < k; l++)
-        {
-          C[i * n + j] += __half2float(A[i * k + l] * B[l * n + j]);
-        }
-      }
-    }
-  }
 
 // takes three arrays and allocate device arrays and copy data to device
   void allocate_and_copy_to_device(float* h_A, float* h_B, float* h_C,

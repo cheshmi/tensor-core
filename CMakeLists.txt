@@ -44,6 +44,3 @@ add_executable(tensor-core-demo main_bench.cu
 )
 target_link_libraries(tensor-core-demo
         nvbench::main)
-
-
-#add_subdirectory(test)

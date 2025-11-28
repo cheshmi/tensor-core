@@ -34,21 +34,6 @@ void generate_random_float_arrays(half* A, int n) {
 }
 
 
-/*void dense_matmul(half* A, half* B, float* C, int m, int n, int k)
-{
-  for (int i = 0; i < m; i++){
-    for (int j = 0; j < n; j++){
-      for (int l = 0; l < k; l++){
-        //C[i * n + j] += __half2float(A[i * k + l] * B[l * n + j]);
-	auto tmp = A[i * k + l] * B[l * n + j];
-        float tmp_f = float(tmp);
-        C[i * n + j] += tmp_f;
-      }
-    }
-  }
-}*/
-
-
 void dense_matmul(half *A, half *B, float* C, int m, int n, int k)
 {
   for (int i = 0; i < m; i++){
@@ -95,8 +80,7 @@ void nvbench_matmul_cc(nvbench::state& state)
   dim3 threads_naive(32, 1, 1); // 32 threads per block, simple for 1D mapping
   dim3 blocks_naive((N + 31) / 32, M, 1); // A block row for each M row, blocks to cover N
 
-  // ... Initialization, allocation, HtoD transfer (omitted for brevity)
-  // generat A as 16 by 16 and B as 16 by N
+  // generate A as 16 by 16 and B as 16 by N
   half *h_A, *h_B;
   float *h_C, *h_correct_C;
   h_C = (float*)malloc(total_elements_C * sizeof(float));
@@ -138,7 +122,7 @@ void nvbench_matmul_cc(nvbench::state& state)
   std::vector<float> out_host(total_elements_C);
   CUDA_CHECK(cudaMemcpy(out_host.data(), d_C, total_elements_C * sizeof(float), cudaMemcpyDeviceToHost));
 
-  // Verify correctness
+  // Verify correctness (roughly)
   bool correct = true;
   for (size_t i = 0; i < total_elements_C; ++i) {
     if (fabs(out_host[i] - h_correct_C[i])/fabs(h_correct_C[i]) > 1e-3) {
@@ -168,13 +152,7 @@ void nvbench_matmul_tc(nvbench::state& state)
   int total_elements_C = M * N;
   int num_n_tiles = (N + WMMA_N_TILE - 1) / WMMA_N_TILE; // Total 16x16 tiles across the N dimension
 
-  // --- Naive CUDA Core Execution ---
-  // Launch one thread per element C[row][col]
-  dim3 threads_naive(32, 1, 1); // 32 threads per block, simple for 1D mapping
-  dim3 blocks_naive((N + 31) / 32, M, 1); // A block row for each M row, blocks to cover N
-
-  // ... Initialization, allocation, HtoD transfer (omitted for brevity)
-  // generat A as 16 by 16 and B as 16 by N
+  // generate A as 16 by 16 and B as 16 by N
   half *h_A, *h_B;
   float *h_C, *h_correct_C;
   h_C = (float*)malloc(total_elements_C * sizeof(float));
