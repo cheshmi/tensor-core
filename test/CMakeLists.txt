@@ -6,7 +6,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 project(muladd_op_test LANGUAGES CXX CUDA)
 
 add_executable(muladd_op_test
-        muladd_op_test.cu
+        mul_op_test.cu
 )
 
 target_link_libraries(muladd_op_test

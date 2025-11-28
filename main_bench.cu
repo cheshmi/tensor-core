@@ -5,11 +5,6 @@
 // Distribution of this code is not permitted in any form
 // without express written permission from SwiftWare Lab.
 
-
-
-//#include <nvbench/nvbench.cuh>
-
-
 #include <nvbench/nvbench.cuh>
 #include <vector>
 #include <numeric>
@@ -41,12 +36,9 @@ void generate_random_float_arrays(half* A, int n) {
 
 void dense_matmul(half* A, half* B, float* C, int m, int n, int k)
 {
-  for (int i = 0; i < m; i++)
-  {
-    for (int j = 0; j < n; j++)
-    {
-      for (int l = 0; l < k; l++)
-      {
+  for (int i = 0; i < m; i++){
+    for (int j = 0; j < n; j++){
+      for (int l = 0; l < k; l++){
         C[i * n + j] += __half2float(A[i * k + l] * B[l * n + j]);
       }
     }
@@ -118,7 +110,7 @@ void nvbench_matmul_cc(nvbench::state& state)
     // start timer
     timer.start();
     // Naive Kernel Call
-  swiftware::hpp::Naive_CUDA_Core_GEMM<<<blocks_naive, threads_naive>>>(d_A, d_B, d_C, N);
+    swiftware::hpp::Naive_CUDA_Core_GEMM<<<blocks_naive, threads_naive>>>(d_A, d_B, d_C, N);
     // stop timer
     timer.stop();
   });

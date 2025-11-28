@@ -1,9 +1,8 @@
-# 🎓 Tutorial 02: GPU Basics
-This tutorial teaches you how to build and run your GPU code in CE 4SP4.
+# 🎓 Tutorial 03: GPU Tensor Cores (not graded)
+This tutorial teaches you how to use tensor cores in CE 4SP4.
 
 The main goals of this tutorial are:
-* How to build and run GPU code on the ECE cluster.
-* Get started with GPU programming and profiling.
+* implement a simple operation using tensor cores and half precision.
 
 
 ***
@@ -59,7 +58,7 @@ sbatch build_run.sh
 ```
 
 This command submits the `build_run.sh` script to the SLURM scheduler. The instructions in the `build_run.sh` file are
-unix commands that will be executed on a compute node. The output of the job will be saved in a file named `tut02.<job_id>.<node_id>.out`,
+unix commands that will be executed on a compute node. The output of the job will be saved in a file named `tut03.<job_id>.<node_id>.out`,
 where `<job_id>` is the ID of the job assigned by SLURM. You can check the content of this file using the `cat`, `nano`, or `vim` commands.
 
 * **Never use `bash`** to run your code on the login node. Use `sbatch` instead. `bash` runs the code directly on
@@ -79,54 +78,7 @@ have Nvidia GPU to be able to run your Cuda code locally.
 
 ## ✅ Tasks
 
-You will need to start working on the TODO items described below:
-
-### Task 1: Getting started with NVIDIA nvbench and GPU programming
-
-You will need to add another implementation of the vector operation
-and compare its performance with the existing two implementations of the same operation
-using **NVIDIA nvbench (nvbench)**. nvbench is a framework for benchmarking GPU code that
-we will use in this course. Your implementation (`mulAddKernel_v3`) should be designed such that each thread
-performs 4 operations (instead of one operation per thread in the current two kernels).
-Two nvbench benchmark functions are provided in the `main_bench.cu` file. Add another benchmark function for
-your implementation. Keep the benchmark arguments the same.
-
-* **NVIDIA nvbench** is a library to benchmark GPU code. See more info [here](https://github.com/NVIDIA/nvbench).
-
-### Task 2: Getting started with GPU programming
-Profile the three kernels and plot the most relevant metrics using NVIDIA Nsight.
-The profiling report is stored as CSV/JSON files in the `logs` directory.
-Plot `L1/TEX Hit Rate` and `Memory Throughput` for the three implementations across different sizes.
-
-
-### Evaluation
-You will be evaluated based on the following criteria:
-* Quality and number of the test cases
-* Performance comparison using Nvidia Benchmark
-* No report is required for this tutorial.
-
-### Submission
-* Enter your McMaster ID in `mac_id.txt`.
-* You will need to push your code to the repository's main branch.
-* Make sure to commit and push your code before the deadline.
-* Make sure your code compiles and runs on the ECE cluster. If your code does not compile or run, you will get a zero for this tutorial.
-  The TA only runs the `build_run.sh` file to build and run your code.
-* There should not be any extra output in the terminal when running the `build_run.sh` file.
-  Only outputs from Google Test and Nvidia Benchmark should be printed. If you use `cout` or `printf` for debugging,
-  make sure to remove them before submission.
-  This may affect your grade negatively. Regrade requests due to extra printing will not be accepted.
-
-
-## Descriptive Answers (TODO)
-Typically there is no single correct answer/plot for the following questions. Rely on your thought process!
-
-### Plot(s) 1: GPU profiligng results
-
-TODO: make sure to reference the correct plot below
-
-![Figure 1: ](plots/plot1.png)
-
-Description: TODO: please provide details for your plot(s) here.
+There is no specific tasks. You can run the benchmark and see the performance 
 
 
 ***
