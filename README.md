@@ -1,4 +1,4 @@
-# 🎓 Tutorial 03: GPU Tensor Cores (not graded)
+# 🎓 Tutorial: GPU Tensor Cores (not graded)
 This tutorial teaches you how to use tensor cores in CE 4SP4.
 
 The main goals of this tutorial are:
@@ -28,7 +28,7 @@ repository and push your code to it. To clone the repository, you will need to u
 
 
 ```
-git clone https://github.com/4sp4-2025/<repo-name>.git
+git clone https://github.com/4sp4-<repo-name>.git
 ```
 
 Where `repo-name` is specific to your repo.
